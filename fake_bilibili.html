@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仿B站标签页 - 测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        /* 整个卡片容器 */
+        .card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* 标签栏 */
+        .tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0 20px;
+        }
+
+        .tab-btn {
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: #00a1d6;
+        }
+
+        .tab-btn.active {
+            color: #00a1d6;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #00a1d6;
+        }
+
+        /* 内容面板 */
+        .content-panel {
+            display: none;
+            padding: 30px;
+            background: white;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        /* 模拟B站卡片样式 */
+        .video-card {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            transition: transform 0.2s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-2px);
+            background: #f0f0f0;
+        }
+
+        .video-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .video-info {
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- 标签按钮区 -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1">首页</button>
+        <button class="tab-btn" data-tab="tab2">番剧</button>
+        <button class="tab-btn" data-tab="tab3">直播</button>
+        <button class="tab-btn" data-tab="tab4">游戏中心</button>
+    </div>
+
+    <!-- 首页内容 -->
+    <div id="tab1" class="content-panel active">
+        <div class="video-card">
+            <div class="video-title">【测试视频1】这是我模仿B站做的标签页</div>
+            <div class="video-info">UP主：唐红 · 1.2万播放 · 首次尝试</div>
+        </div>
+        <div class="video-card">
+            <div class="video-title">【测试视频2】点击上面标签可以切换内容</div>
+            <div class="video-info">UP主：唐红 · 8千播放 · 纯HTML/CSS/JS实现</div>
+        </div>
+        <div class="video-card">
+            <div class="video-title">【测试视频3】完全不影响你的原首页</div>
+            <div class="video-info">UP主：唐红 · 5千播放 · 独立文件</div>
+        </div>
+    </div>
+
+    <!-- 番剧内容 -->
+    <div id="tab2" class="content-panel">
+        <div class="video-card">
+            <div class="video-title">🎬 新番推荐：四月新番导视</div>
+            <div class="video-info">追番人数：12.3万 · 更新至第3集</div>
+        </div>
+        <div class="video-card">
+            <div class="video-title">🔥 热门番剧：某某同学不会告白</div>
+            <div class="video-info">追番人数：8.7万 · 已完结</div>
+        </div>
+    </div>
+
+    <!-- 直播内容 -->
+    <div id="tab3" class="content-panel">
+        <div class="video-card">
+            <div class="video-title">🎮 正在直播：程序员写代码</div>
+            <div class="video-info">主播：唐红 · 123人正在观看</div>
+        </div>
+        <div class="video-card">
+            <div class="video-title">🎤 音乐区：钢琴演奏会</div>
+            <div class="video-info">主播：神秘钢琴师 · 456人正在观看</div>
+        </div>
+    </div>
+
+    <!-- 游戏中心内容 -->
+    <div id="tab4" class="content-panel">
+        <div class="video-card">
+            <div class="video-title">🎮 原神 · 最新版本更新</div>
+            <div class="video-info">128万人下载 · 近期热门</div>
+        </div>
+        <div class="video-card">
+            <div class="video-title">⚡ 王者荣耀 · 新赛季开启</div>
+            <div class="video-info">256万人下载 · 竞技对战</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 获取所有标签按钮和内容面板
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.content-panel');
+
+    // 给每个按钮绑定点击事件
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. 移除所有按钮的 active 类
+            btns.forEach(b => b.classList.remove('active'));
+            // 2. 给当前点击的按钮添加 active 类
+            btn.classList.add('active');
+            
+            // 3. 隐藏所有内容面板
+            panels.forEach(p => p.classList.remove('active'));
+            // 4. 显示对应的内容面板
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
